@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,6 +70,33 @@ nav{
   border-bottom:1px solid rgba(255,255,255,0.05);
   transition:padding .3s ease;
 }
+.nav-toggle{
+  display:none;width:38px;height:38px;border-radius:10px;
+  background:var(--panel);border:1px solid var(--panel-border);
+  cursor:pointer;align-items:center;justify-content:center;flex-direction:column;gap:4px;
+}
+.nav-toggle span{width:16px;height:1.5px;background:var(--text);transition:transform .3s ease, opacity .3s ease;}
+.nav-toggle.open span:nth-child(1){transform:translateY(5.5px) rotate(45deg);}
+.nav-toggle.open span:nth-child(2){opacity:0;}
+.nav-toggle.open span:nth-child(3){transform:translateY(-5.5px) rotate(-45deg);}
+.mobile-menu{
+  position:fixed;top:0;right:0;height:100vh;width:min(78vw,320px);z-index:99;
+  background:rgba(10,10,15,0.92);backdrop-filter:blur(20px);
+  border-left:1px solid rgba(255,255,255,0.08);
+  display:flex;flex-direction:column;gap:6px;padding:100px 30px 40px;
+  transform:translateX(100%);transition:transform .4s cubic-bezier(.2,.8,.2,1);
+}
+.mobile-menu.open{transform:translateX(0);}
+.mobile-menu a{
+  color:var(--text);text-decoration:none;font-size:1.15rem;font-weight:500;
+  padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.06);
+  font-family:'Bricolage Grotesque',sans-serif;
+}
+.menu-scrim{
+  position:fixed;inset:0;z-index:98;background:rgba(0,0,0,0.5);
+  opacity:0;pointer-events:none;transition:opacity .35s ease;
+}
+.menu-scrim.open{opacity:1;pointer-events:all;}
 .logo{
   font-family:'Bricolage Grotesque',sans-serif;
   font-weight:700;font-size:1.3rem;letter-spacing:-0.02em;
@@ -380,12 +406,82 @@ footer{
 .skel{background:linear-gradient(100deg,rgba(255,255,255,0.03) 30%,rgba(255,255,255,0.08) 50%,rgba(255,255,255,0.03) 70%);background-size:200% 100%;animation:shimmer 1.6s infinite;}
 @keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
 
-@media (max-width:860px){
+/* ===================== RESPONSIVE ===================== */
+
+/* Tablet */
+@media (max-width:960px){
   .nav-links{display:none;}
-  .insights-wrap{grid-template-columns:1fr;}
+  .nav-toggle{display:flex;}
+  section{padding:100px 6% 100px;}
+  .insights-wrap{grid-template-columns:1fr;gap:50px;}
+  .insight-visual{max-width:280px;}
   .modal{grid-template-columns:1fr;}
   .modal .mposter{min-height:220px;}
-  .stats-wrap{grid-template-columns:1fr;}
+  .stats-wrap{grid-template-columns:repeat(3,1fr);gap:16px;}
+  .stat-card{padding:28px 12px;}
+  .carousel-shell{height:400px;}
+  .ccard{width:190px;height:280px;}
+}
+
+/* Mobile */
+@media (max-width:640px){
+  .hero{padding:120px 6% 60px;min-height:auto;}
+  .hero h1{font-size:clamp(2.4rem,11vw,3rem);}
+  .hero p.sub{font-size:0.95rem;}
+  .search-bar{flex-wrap:wrap;border-radius:22px;padding:16px;}
+  .search-bar input{width:100%;order:1;padding:8px 4px;}
+  .search-bar svg{order:0;}
+  .search-bar button{order:2;width:100%;justify-content:center;padding:13px 20px;}
+  .floater{width:64px;height:96px;opacity:0.35;}
+
+  section{padding:80px 6%;}
+  .section-head{margin-bottom:40px;}
+  .section-head h2{font-size:clamp(1.6rem,7vw,2.1rem);}
+
+  .card-grid{grid-template-columns:repeat(2,1fr);gap:14px;}
+  .mcard .poster{height:210px;}
+  .mcard-body{padding:12px 12px 14px;margin-top:-50px;}
+  .mcard-body h3{font-size:0.88rem;}
+  .mcard-tags span, .mcard-meta{font-size:0.66rem;}
+
+  .carousel-shell{height:320px;perspective:900px;}
+  .ccard{width:150px;height:220px;}
+  .ccard .clabel h4{font-size:0.82rem;}
+  .ccard .clabel span{font-size:0.66rem;}
+  .carousel-nav button{width:38px;height:38px;}
+
+  .trailer-frame{clip-path:polygon(4% 0, 100% 0, 96% 100%, 0% 100%);}
+  .trailer-caption{flex-direction:column;gap:4px;}
+
+  .insight-visual{max-width:220px;}
+  .ring-center .pct{font-size:2.3rem;}
+
+  .stats-wrap{grid-template-columns:1fr;gap:14px;}
+  .stat-card{padding:26px 16px;}
+  .stat-num{font-size:2.2rem;}
+
+  .modal-info{padding:24px 20px;}
+  .modal-info h2{font-size:1.4rem;}
+  .modal-crew{grid-template-columns:1fr;}
+  .modal-actions{flex-direction:column;}
+  .modal-actions .btn{width:100%;justify-content:center;}
+
+  footer{flex-direction:column;align-items:flex-start;text-align:left;}
+  .footer-links{flex-wrap:wrap;gap:16px 22px;}
+
+  .toast{width:88%;justify-content:center;}
+}
+
+/* Small phones */
+@media (max-width:380px){
+  .card-grid{grid-template-columns:1fr 1fr;gap:10px;}
+  .mcard .poster{height:180px;}
+  .ccard{width:130px;height:190px;}
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
 }
 </style>
 </head>
@@ -402,7 +498,15 @@ footer{
     <li><a href="#insights">How it works</a></li>
     <li><a href="#stats">Stats</a></li>
   </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
+<div class="menu-scrim" id="menuScrim"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#spotlight">Discover</a>
+  <a href="#carousel">Explore</a>
+  <a href="#insights">How it works</a>
+  <a href="#stats">Stats</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -843,6 +947,30 @@ function showToast(msg){
   clearTimeout(toastTimer);
   toastTimer = setTimeout(()=> toast.classList.remove('show'), 2600);
 }
+
+/* ---------------- mobile menu ---------------- */
+const navToggle = document.getElementById('navToggle');
+const mobileMenu = document.getElementById('mobileMenu');
+const menuScrim = document.getElementById('menuScrim');
+function closeMenu(){ navToggle.classList.remove('open'); mobileMenu.classList.remove('open'); menuScrim.classList.remove('open'); }
+navToggle.addEventListener('click', ()=>{
+  const isOpen = mobileMenu.classList.toggle('open');
+  navToggle.classList.toggle('open', isOpen);
+  menuScrim.classList.toggle('open', isOpen);
+});
+menuScrim.addEventListener('click', closeMenu);
+mobileMenu.querySelectorAll('a').forEach(a=> a.addEventListener('click', closeMenu));
+
+/* ---------------- touch-friendly carousel tap (mobile) ---------------- */
+let touchStartX = 0;
+track.addEventListener('touchstart', e=>{ autoRotate=false; touchStartX = e.touches[0].clientX; }, {passive:true});
+track.addEventListener('touchmove', e=>{
+  const dx = e.touches[0].clientX - touchStartX;
+  rotation = rotation - dx*0.02;
+  touchStartX = e.touches[0].clientX;
+  layoutCarousel();
+}, {passive:true});
+track.addEventListener('touchend', ()=> setTimeout(()=>autoRotate=true, 2200));
 
 /* ---------------- nav shrink on scroll ---------------- */
 ScrollTrigger.create({
